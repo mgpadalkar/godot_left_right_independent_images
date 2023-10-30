@@ -1,0 +1,41 @@
+[gd_scene load_steps=8 format=3 uid="uid://bntwd7wauuuk1"]
+
+[ext_resource type="Script" path="res://main.gd" id="1_3a7oj"]
+[ext_resource type="Shader" path="res://main.gdshader" id="2_p16dt"]
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_giqpn"]
+
+[sub_resource type="Sky" id="Sky_gbhlo"]
+sky_material = SubResource("ProceduralSkyMaterial_giqpn")
+
+[sub_resource type="Environment" id="Environment_s17av"]
+background_mode = 2
+sky = SubResource("Sky_gbhlo")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_njly2"]
+render_priority = 0
+shader = ExtResource("2_p16dt")
+shader_parameter/albedo = Color(1, 0, 0, 1)
+shader_parameter/uv1_scale = Vector3(1, 1, 1)
+shader_parameter/uv1_offset = Vector3(0, 0, 0)
+
+[sub_resource type="QuadMesh" id="QuadMesh_r8okx"]
+material = SubResource("ShaderMaterial_njly2")
+size = Vector2(3, 2)
+
+[node name="Node3D" type="Node3D"]
+script = ExtResource("1_3a7oj")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_s17av")
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+
+[node name="XROrigin3D" type="XROrigin3D" parent="."]
+
+[node name="XRCamera3D" type="XRCamera3D" parent="XROrigin3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="XROrigin3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, -1.5)
+mesh = SubResource("QuadMesh_r8okx")
+skeleton = NodePath("../..")
